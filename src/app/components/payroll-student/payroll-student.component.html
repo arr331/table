@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-md-9">
+        <h3 class="text-center h3-tittle">Planilla de Estudiantes</h3>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-list" data-toggle="modal" data-target=".bd-example-modal-lg">Listado de
+            reprobados</button>
+    </div>
+</div>
+<hr>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Nota</th>
+            <th scope="col">Observación</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let student of listStudents">
+            <tr class="hover">
+                <th scope="row">{{student.code}}</th>
+                <td>{{student.name}}</td>
+                <td>{{student.surname}}</td>
+                <td [ngStyle]="{'background': student.qualification > 3.0 ? 'white' : '#dc3545'}">
+                    {{student.qualification}}</td>
+                <td>{{student.qualification > 3.0 ? aprobo : reprobo}}</td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+<hr>
+
+<button type="button" (click)="reset()" class="btn btn-primary">Recargar</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Estudiantes que reprobaron el curso </h3>
+                <span>{{fetch | date: 'medium'}}</span>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item active text-center li-tittle">Estudiantes</li>
+                    <ng-container *ngFor="let student of listStudents">
+                        <li class="list-group-item hover" *ngIf="student.qualification < 3.0">{{student.name}}
+                            {{student.surname}} con <span class="badge badge-danger">{{student.qualification}}</span>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="welcome"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Bienvenido al portal de Calificaciones</h2>
+                <span>{{fetch | date: 'medium'}}</span>
+            </div>
+            <div class="modal-body">
+                <h4>Aquí podrás ver las notas de tus estudiantes y algunos detalles como ver quienes reprobaron el
+                    curso.</h4>
+                <hr>
+                <p> <span class="badge badge-dark">NOTA: </span> Si desea ver a detalle el listado de los que
+                    reprobaron pulse el botón <span class="badge badge-danger">Listado de reprobados</span></p>
+                <p>Las notas se generan aleatoriamente, para cambiar los
+                    resultados presione el botón <span class="badge badge-primary">Recargar</span></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
